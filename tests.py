@@ -27,7 +27,7 @@ class PartyTests(unittest.TestCase):
                                   data={"name": "Jane",
                                         "email": "jane@jane.com"},
                                   follow_redirects=True)
-        # FIXME: Once we RSVP, we should see the party details, but
+        # Once we RSVP, we should see the party details, but
         # not the RSVP form
         self.assertNotIn(b"Please RSVP", result.data)
         self.assertIn(b"Party Details", result.data)
@@ -43,22 +43,28 @@ class PartyTestsDatabase(unittest.TestCase):
         app.config['TESTING'] = True
 
         # Connect to test database (uncomment when testing database)
-        # connect_to_db(app, "postgresql:///testdb")
+        connect_to_db(app, "postgresql:///testdb")
 
         # Create tables and add sample data (uncomment when testing database)
-        # db.create_all()
-        # example_data()
+        db.create_all()
+        example_data()
+
 
     def tearDown(self):
         """Do at end of every test."""
 
         # (uncomment when testing database)
-        # db.session.close()
-        # db.drop_all()
+        db.session.close()
+        db.drop_all()
 
     def test_games(self):
         # FIXME: test that the games page displays the game from example_data()
-        print("FIXME")
+        result = self.client.get("/games")
+        data={"name": "Monopoly", "description": "Buy property"}
+        self.assertIn(b"Monopoly", result.data)
+        
+        data={"name": "Apples 2 Apples", "description": "Describe cards"}
+        self.assertIn(b"Apples 2 Apples", result.data)
 
 
 if __name__ == "__main__":
