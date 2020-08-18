@@ -60,10 +60,10 @@ class PartyTestsDatabase(unittest.TestCase):
     def test_games(self):
         # FIXME: test that the games page displays the game from example_data()
         result = self.client.get("/games")
-        data={"name": "Monopoly", "description": "Buy property"}
+
+        #Checks for data committed to database from example data function in 
+        #model.py file:
         self.assertIn(b"Monopoly", result.data)
-        
-        data={"name": "Apples 2 Apples", "description": "Describe cards"}
         self.assertIn(b"Apples 2 Apples", result.data)
 
 
