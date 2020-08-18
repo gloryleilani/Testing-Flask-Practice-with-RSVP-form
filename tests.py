@@ -22,7 +22,6 @@ class PartyTests(unittest.TestCase):
         self.assertIn(b"Please RSVP", result.data)
         self.assertNotIn(b"Party Details", result.data)
 
-
     def test_rsvp(self):
         result = self.client.post("/rsvp",
                                   data={"name": "Jane",
